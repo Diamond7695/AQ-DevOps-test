@@ -5,6 +5,17 @@ const {bots, playerRecord} = require('./data')
 const {shuffleArray} = require('./utils')
 
 app.use(express.json())
+var Rollbar = require('rollbar')
+var rollbar = new Rollbar({
+  accessToken: '40b513615cd24d23b259c0883521d1a6',
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+})
+
+app.get('/', (req,res)=>{
+    res.sendFile(path.join(__dirname, '/public/index.html'))
+    rollbar.info('html file serverd successfully.')
+})
 
 app.get('/',function(req,res){
     res.sendFile(path.join(__dirname, '/public/index.html'))
